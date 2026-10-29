@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -12,10 +11,10 @@
   <meta name="theme-color" content="#181a20">
   <link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='%232c3e50'><rect width='512' height='512' rx='120' fill='%231a1c23'/><path d='M160 120h192v272H160z' fill='%23d4af37' opacity='0.2'/><path d='M180 140h152v232H180z' fill='%23f4efe6'/><path d='M210 180h92M210 220h92M210 260h60' stroke='%234a3b32' stroke-width='12' stroke-linecap='round'/></svg>">
 
-  <!-- Google Fonts (Nanum Myeongjo) -->
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&display=swap" rel="stylesheet">
 
-  <!-- External Parsers -->
+  <!-- Parsers -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -56,7 +55,7 @@
       display: none;
       flex-direction: column;
       opacity: 0;
-      transition: opacity 0.35s ease;
+      transition: opacity 0.25s ease;
       background: var(--bg-gradient);
     }
 
@@ -183,7 +182,7 @@
       overflow: hidden;
     }
 
-    /* 독서 화면 (아이폰 전체화면 최적화) */
+    /* 독서 화면 */
     #screen-reader {
       background: var(--reader-bg);
       color: var(--text-main);
@@ -239,7 +238,7 @@
       font-weight: 500;
     }
 
-    /* 슬림하고 콤팩트해진 아일랜드 플로팅 바 */
+    /* 슬림 플로팅 아일랜드 바 */
     .floating-menu {
       position: absolute;
       bottom: calc(var(--safe-bottom) + 10px);
@@ -351,7 +350,7 @@
       <button class="icon-btn" onclick="switchScreen('library')"><svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg></button>
       <button class="icon-btn" onclick="openModal('modal-toc')"><svg viewBox="0 0 24 24"><path d="M3 9h14V7H3v2zm0 4h14v-2H3v2zm0 4h14v-2H3v2zm16 0h2v-2h-2v2zm0-10v2h2V7h-2zm0 6h2v-2h-2v2z"/></svg></button>
       <button class="icon-btn" onclick="toggleTTS()"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></button>
-      <button class="icon-btn" onclick="openModal('modal-settings')"><svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg></button>
+      <button class="icon-btn" onclick="closeModal('modal-settings')"><svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg></button>
     </div>
   </div>
 
@@ -367,7 +366,11 @@
   </div>
 
   <script>
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    // PDF.js 워커 예외 처리 적용
+    if (window.pdfjsLib) {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    }
+
     let books = JSON.parse(localStorage.getItem('yeobaek_books') || '[]');
     let currentBookId = null;
     let lastScrollTop = 0;
@@ -381,14 +384,103 @@
     function openModal(id) { document.getElementById(id).classList.add('active'); }
     function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
+    // 파일 로딩 핵심 로직 (폴백 파서 완비)
+    async function handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const title = file.name.replace(/\.[^/.]+$/, "");
+      let rawText = "";
+
+      try {
+        const ext = file.name.split('.').pop().toLowerCase();
+
+        if (ext === 'txt' || ext === 'md' || ext === 'html') {
+          const buffer = await file.arrayBuffer();
+          try {
+            rawText = new TextDecoder('utf-8', { fatal: true }).decode(buffer);
+          } catch (e) {
+            rawText = new TextDecoder('euc-kr').decode(buffer);
+          }
+          if (ext === 'html' || ext === 'md') {
+            const doc = new DOMParser().parseFromString(rawText, 'text/html');
+            rawText = doc.body.innerText || doc.body.textContent;
+          }
+        } else if (ext === 'pdf') {
+          const buffer = await file.arrayBuffer();
+          if (window.pdfjsLib) {
+            const pdf = await pdfjsLib.getDocument({ data: buffer }).promise;
+            for (let i = 1; i <= pdf.numPages; i++) {
+              const page = await pdf.getPage(i);
+              const textContent = await page.getTextContent();
+              textContent.items.forEach(item => { rawText += item.str + " "; });
+              rawText += "\n\n";
+            }
+          } else {
+            rawText = new TextDecoder('utf-8').decode(buffer).replace(/[^\uAC00-\uD7A3\u1100-\u11FF\u3130-\u318F\s0-9a-zA-Z.,!?]/g, ' ');
+          }
+        } else if (ext === 'docx') {
+          const buffer = await file.arrayBuffer();
+          if (window.mammoth) {
+            const result = await mammoth.extractRawText({ arrayBuffer: buffer });
+            rawText = result.value;
+          }
+        } else if (ext === 'epub') {
+          const buffer = await file.arrayBuffer();
+          if (window.JSZip) {
+            const zip = await JSZip.loadAsync(buffer);
+            for (let filename of Object.keys(zip.files)) {
+              if (filename.endsWith('.html') || filename.endsWith('.xhtml') || filename.endsWith('.htm')) {
+                const htmlContent = await zip.files[filename].async('text');
+                const doc = new DOMParser().parseFromString(htmlContent, 'text/html');
+                rawText += (doc.body.innerText || doc.body.textContent) + "\n\n";
+              }
+            }
+          }
+        }
+
+        if (!rawText || !rawText.trim()) {
+          alert('파일 본문을 읽어오지 못했습니다. TXT 파일 형식으로 전환해 시도해 주세요.');
+          return;
+        }
+
+        saveBookToLibrary(title, rawText);
+      } catch (err) {
+        alert('파일을 열 수 없습니다: ' + err.message);
+      } finally {
+        event.target.value = '';
+      }
+    }
+
+    function saveBookToLibrary(title, rawText) {
+      const newBook = {
+        id: Date.now(),
+        title: title,
+        content: rawText,
+        scrollPos: 0,
+        isFinished: false,
+        createdAt: new Date().toLocaleDateString()
+      };
+      books.unshift(newBook);
+      localStorage.setItem('yeobaek_books', JSON.stringify(books));
+      openBook(newBook.id);
+    }
+
+    function openBook(id) {
+      const book = books.find(b => b.id === id);
+      if (!book) return;
+      currentBookId = id;
+      renderParsedBookContent(book);
+      switchScreen('reader');
+    }
+
     function renderParsedBookContent(book) {
       const container = document.getElementById('content-body');
-      container.innerHTML = `<h1 style="text-align:center; margin-bottom:1em; font-size:1.6rem;">${book.title}</h1>`;
+      container.innerHTML = `<h1 style="text-align:center; margin-bottom:1.5em; font-size:1.6rem; border-bottom:1px solid var(--accent); padding-bottom:0.5em;">${book.title}</h1>`;
 
       const lines = book.content.split(/\r?\n/);
       let tocList = [];
 
-      // 초고감도 목차 정규식 (추리소설/번역본 및 숫자로만 된 단독 행 감지 추가)
       const chapterRegex = /^\s*(제\s*[\d０-９一二三四五六七八九十백천]+\s*[장화회편권부절기억토막]|CHAPTER\s*\d+|CHAP\.?\s*\d+|\d+\s*화|\d+\s*회|[\d０-９]+\s*\.\s+\S+|^\d+$|\b(프롤로그|에필로그|서문|머리말|맺음말|후기|prologue|epilogue)\b)/i;
 
       lines.forEach((line, index) => {
@@ -419,7 +511,7 @@
 
     function renderTOC(tocList) {
       const tocContainer = document.getElementById('toc-list');
-      tocContainer.innerHTML = tocList.length === 0 ? '<div style="color:#888; text-align:center;">자동 감지된 목차가 없습니다.</div>' : '';
+      tocContainer.innerHTML = tocList.length === 0 ? '<div style="color:#888; text-align:center; padding:20px;">자동 감지된 목차가 없습니다.</div>' : '';
       tocList.forEach(item => {
         const div = document.createElement('div');
         div.className = 'toc-item';
@@ -430,6 +522,31 @@
         };
         tocContainer.appendChild(div);
       });
+    }
+
+    function renderLibrary() {
+      const container = document.getElementById('book-list-container');
+      container.innerHTML = books.length === 0 ? '<div style="text-align:center; color:#777; margin-top:50px;">등록된 책이 없습니다.</div>' : '';
+
+      books.forEach(book => {
+        const card = document.createElement('div');
+        card.className = 'book-card';
+        card.innerHTML = `
+          <div style="flex:1;" onclick="openBook(${book.id})">
+            <div class="book-name">${book.title}</div>
+            <div style="font-size:0.75rem; color:#888; margin-top:4px;">${book.createdAt} 등록</div>
+          </div>
+          <button onclick="deleteBook(${book.id})" style="background:none; border:none; color:#ff6b6b; padding:8px;">삭제</button>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function deleteBook(id) {
+      if (!confirm('삭제하시겠습니까?')) return;
+      books = books.filter(b => b.id !== id);
+      localStorage.setItem('yeobaek_books', JSON.stringify(books));
+      renderLibrary();
     }
 
     function handleScroll() {
