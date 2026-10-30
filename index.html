@@ -25,7 +25,7 @@
       --reader-bg: #f7f4ed;
       --accent: #c5a059;
       --safe-top: env(safe-area-inset-top, 20px);
-      --safe-bottom: env(safe-area-inset-bottom, 20px);
+      --safe-bottom: env(safe-area-inset-bottom, 16px);
     }
 
     * {
@@ -64,13 +64,11 @@
       z-index: 10;
     }
 
-    /* -------------------------------------------------------------
-       1. 초기 화면 (홈) - 아늑한 서재 컬러 일러스트 배경
-    ------------------------------------------------------------- */
+    /* 초기 화면 (홈) */
     #screen-home {
       justify-content: space-between;
       align-items: center;
-      padding: calc(var(--safe-top) + 20px) 24px calc(var(--safe-bottom) + 30px);
+      padding: calc(var(--safe-top) + 20px) 24px calc(var(--safe-bottom) + 24px);
       text-align: center;
       background: linear-gradient(rgba(20, 22, 30, 0.75), rgba(18, 19, 24, 0.85)),
                   url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"><rect fill="#232733" width="400" height="400"/><path d="M50 0h300v400H50z" fill="#2d3242" opacity="0.5"/><path d="M0 100h400v200H0z" fill="#3a4158" opacity="0.3"/></svg>');
@@ -132,9 +130,7 @@
     .icon-btn:active { transform: scale(0.92); background: var(--accent); color: #000; }
     .icon-btn svg { width: 22px; height: 22px; fill: currentColor; }
 
-    /* -------------------------------------------------------------
-       2. 서재 화면
-    ------------------------------------------------------------- */
+    /* 서재 화면 */
     #screen-library {
       padding: calc(var(--safe-top) + 15px) 20px calc(var(--safe-bottom) + 20px);
       background: linear-gradient(180deg, #1e222d 0%, #14161d 100%);
@@ -194,20 +190,16 @@
       overflow: hidden;
     }
 
-    /* -------------------------------------------------------------
-       3. 독서 본문 화면 & 진행률 바 & 배경 비침
-    ------------------------------------------------------------- */
+    /* 독서 본문 화면 */
     #screen-reader {
       background: var(--reader-bg);
       color: var(--text-main);
       position: relative;
     }
 
-    /* 상단 독서 진행률 바 */
     .reading-progress-bar {
       position: absolute;
-      top: 0;
-      left: 0;
+      top: 0; left: 0;
       height: 3px;
       background: var(--accent);
       width: 0%;
@@ -219,13 +211,12 @@
       width: 100%;
       height: 100dvh;
       overflow-y: auto;
-      padding: calc(var(--safe-top) + 30px) 24px calc(var(--safe-bottom) + 70px);
+      padding: calc(var(--safe-top) + 20px) 24px calc(var(--safe-bottom) + 80px);
       scroll-behavior: smooth;
       position: relative;
       z-index: 2;
     }
 
-    /* 선명하고 은은한 컬러 일러스트 배경 비침 */
     .reader-bg-artwork {
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -265,10 +256,10 @@
       font-weight: 500;
     }
 
-    /* 슬림 플로팅 아일랜드 바 */
+    /* 하단 안전 영역 최적화 슬림 아일랜드 바 */
     .floating-menu {
       position: absolute;
-      bottom: calc(var(--safe-bottom) + 12px);
+      bottom: max(12px, calc(var(--safe-bottom) + 4px));
       left: 50%;
       transform: translateX(-50%);
       display: flex;
@@ -284,7 +275,7 @@
     }
 
     .floating-menu.hidden {
-      transform: translate(-50%, 80px);
+      transform: translate(-50%, 90px);
       opacity: 0;
       pointer-events: none;
     }
@@ -354,7 +345,6 @@
       <div class="app-subtitle">Yeobaek Seojae</div>
     </div>
 
-    <!-- 품격 있는 일러스트 아트워크 -->
     <div class="illustration-container">
       <svg viewBox="0 0 320 380" fill="none" style="width:100%; height:100%;">
         <path d="M40 360 V140 A120 120 0 0 1 280 140 V360 Z" fill="#2d3245" stroke="#c5a059" stroke-width="2.5"/>
@@ -391,7 +381,6 @@
 
   <!-- 독서 본문 화면 -->
   <div id="screen-reader" class="app-screen">
-    <!-- 실시간 진행률 표시바 -->
     <div id="reading-progress" class="reading-progress-bar"></div>
     <div class="reader-bg-artwork"></div>
 
@@ -399,7 +388,6 @@
       <div id="content-body" class="content-body"></div>
     </div>
 
-    <!-- 슬림 아일랜드 플로팅 바 -->
     <div id="floating-menu" class="floating-menu">
       <button class="icon-btn" onclick="switchScreen('library')" title="서재"><svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg></button>
       <button class="icon-btn" onclick="openModal('modal-toc')" title="목차"><svg viewBox="0 0 24 24"><path d="M3 9h14V7H3v2zm0 4h14v-2H3v2zm0 4h14v-2H3v2zm16 0h2v-2h-2v2zm0-10v2h2V7h-2zm0 6h2v-2h-2v2z"/></svg></button>
@@ -444,6 +432,12 @@
         </div>
       </div>
       <div class="setting-row">
+        <span style="color:#ccc;">굵은 글씨 (볼드)</span>
+        <div style="display:flex; gap:8px;">
+          <button class="opt-btn" id="btn-bold" onclick="toggleBold()">OFF</button>
+        </div>
+      </div>
+      <div class="setting-row">
         <span style="color:#ccc;">글자 크기</span>
         <div style="display:flex; gap:8px;">
           <button class="opt-btn" onclick="changeFontSize(-1)">A-</button>
@@ -466,6 +460,7 @@
     let activeTab = 'reading';
     let lastScrollTop = 0;
     let currentFontSize = 1.1;
+    let isBold = false;
 
     function switchScreen(id) {
       document.querySelectorAll('.app-screen').forEach(s => s.classList.remove('active'));
@@ -581,14 +576,17 @@
       const lines = book.content.split(/\r?\n/);
       let tocList = [];
 
-      // 초고감도 한국어 목차/챕터 패턴
-      const chapterRegex = /^\s*(제\s*[\d０-９一二三四五六七八九十백천]+\s*[장화회편권부절기억토막]|CHAPTER\s*\d+|CHAP\.?\s*\d+|\d+\s*화|\d+\s*회|[\d０-９]+\s*\.\s+\S+|^\d+$|\b(프롤로그|에필로그|서문|머리말|맺음말|후기|prologue|epilogue)\b)/i;
+      // 대폭 강화된 초고감도 한국어 목차/챕터 인식 정규식
+      const chapterRegex = /^\s*(제\s*[\d０-９一二三四五六七八九十백천]+\s*[장화회편권부절기억토막]?|CHAPTER\s*\d+|CHAP\.?\s*\d+|ACT\s*\d+|\d+\s*화|\d+\s*회|[\d０-９]+\s*\.\s+\S+|\b(프롤로그|프로로그|에필로그|서문|머리말|맺음말|후기|prologue|epilogue|introduction)\b)/i;
 
       lines.forEach((line, index) => {
         const trimmed = line.trim();
         if (!trimmed) return;
 
-        if (chapterRegex.test(trimmed)) {
+        // 짧은 숫자 단독 행이나 챕터 패턴 인식
+        const isNumericChapter = /^\d{1,3}$/.test(trimmed) && lines.length > 5;
+
+        if (chapterRegex.test(trimmed) || isNumericChapter) {
           const chapEl = document.createElement('h2');
           chapEl.className = 'chapter-heading';
           chapEl.id = `chap-${index}`;
@@ -674,7 +672,6 @@
       const sh = area.scrollHeight - area.clientHeight;
       const menu = document.getElementById('floating-menu');
 
-      // 진행률 계산 및 바 업데이트
       const progress = sh > 0 ? (st / sh) * 100 : 0;
       document.getElementById('reading-progress').style.width = `${progress}%`;
 
@@ -713,6 +710,15 @@
       body.style.fontFamily = type === 'serif' ? '"Nanum Myeongjo", "Batang", serif' : '-apple-system, sans-serif';
       document.getElementById('font-sans').classList.toggle('active', type === 'sans');
       document.getElementById('font-serif').classList.toggle('active', type === 'serif');
+    }
+
+    function toggleBold() {
+      isBold = !isBold;
+      const body = document.getElementById('content-body');
+      body.style.fontWeight = isBold ? '700' : '400';
+      const btn = document.getElementById('btn-bold');
+      btn.classList.toggle('active', isBold);
+      btn.innerText = isBold ? 'ON' : 'OFF';
     }
 
     function changeFontSize(delta) {
