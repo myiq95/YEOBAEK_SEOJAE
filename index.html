@@ -48,10 +48,8 @@
 
     .app-screen {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100dvh;
+      top: 0; left: 0;
+      width: 100%; height: 100dvh;
       display: none;
       flex-direction: column;
       opacity: 0;
@@ -65,7 +63,7 @@
       z-index: 10;
     }
 
-    /* 초기 화면 (홈) */
+    /* 1. 초기 화면 (홈) */
     #screen-home {
       justify-content: space-between;
       align-items: center;
@@ -110,8 +108,8 @@
     }
 
     .icon-btn {
-      width: 48px;
-      height: 48px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       border: none;
       background: rgba(255, 255, 255, 0.1);
@@ -122,9 +120,9 @@
       cursor: pointer;
     }
 
-    .icon-btn svg { width: 22px; height: 22px; fill: currentColor; }
+    .icon-btn svg { width: 20px; height: 20px; fill: currentColor; }
 
-    /* 서재 화면 */
+    /* 2. 서재 화면 */
     #screen-library {
       padding: calc(var(--safe-top) + 15px) 20px calc(var(--safe-bottom) + 20px);
       background: linear-gradient(180deg, #1e222d 0%, #14161d 100%);
@@ -182,7 +180,7 @@
       overflow: hidden;
     }
 
-    /* 독서 화면 */
+    /* 3. 독서 본문 화면 (전체화면 적용) */
     #screen-reader {
       background: var(--reader-bg);
       color: var(--text-main);
@@ -193,7 +191,7 @@
       width: 100%;
       height: 100dvh;
       overflow-y: auto;
-      padding: calc(var(--safe-top) + 20px) 20px calc(var(--safe-bottom) + 60px);
+      padding: calc(var(--safe-top) + 20px) 20px calc(var(--safe-bottom) + 80px);
       scroll-behavior: smooth;
       position: relative;
       z-index: 2;
@@ -202,7 +200,7 @@
     .reader-bg-artwork {
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
-      opacity: 0.12;
+      opacity: 0.15;
       pointer-events: none;
       z-index: 1;
       background: radial-gradient(circle at 80% 20%, #dfb76c 0%, transparent 40%),
@@ -227,6 +225,7 @@
       margin: 2.2em 0 1em;
       border-left: 4px solid var(--accent);
       padding-left: 12px;
+      color: inherit;
     }
 
     .content-body blockquote.dialogue {
@@ -238,12 +237,37 @@
       font-weight: 500;
     }
 
-    /* 슬림 플로팅 아일랜드 바 */
-    .floating-menu {
+    /* 슬림 하단 플로팅 메뉴 & 진행률 바 */
+    .floating-menu-wrapper {
       position: absolute;
       bottom: calc(var(--safe-bottom) + 10px);
       left: 50%;
       transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      z-index: 100;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .floating-menu-wrapper.hidden {
+      transform: translate(-50%, 90px);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .progress-pill {
+      background: rgba(20, 20, 25, 0.85);
+      color: var(--accent);
+      font-size: 0.72rem;
+      padding: 3px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+    }
+
+    .floating-menu {
       display: flex;
       gap: 12px;
       background: rgba(20, 20, 25, 0.92);
@@ -252,14 +276,6 @@
       backdrop-filter: blur(15px);
       border: 1px solid rgba(255,255,255,0.15);
       box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-      transition: transform 0.3s ease, opacity 0.3s ease;
-      z-index: 100;
-    }
-
-    .floating-menu.hidden {
-      transform: translate(-50%, 80px);
-      opacity: 0;
-      pointer-events: none;
     }
 
     .floating-menu .icon-btn {
@@ -270,7 +286,7 @@
 
     .floating-menu .icon-btn svg { width: 18px; height: 18px; }
 
-    /* 모달 */
+    /* 모달 레이어 */
     .modal-overlay {
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -292,6 +308,44 @@
       color: #fff;
       max-height: 80vh;
       overflow-y: auto;
+    }
+
+    .setting-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .setting-label { font-size: 0.95rem; color: #ccc; }
+
+    .btn-group { display: flex; gap: 8px; }
+
+    .opt-btn {
+      padding: 6px 14px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: transparent;
+      color: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .opt-btn.active {
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
+    }
+
+    .paste-textarea {
+      width: 100%;
+      height: 180px;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 12px;
+      color: #fff;
+      resize: none;
+      margin: 12px 0;
     }
 
     .toc-item { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); cursor: pointer; }
@@ -345,12 +399,65 @@
       <div id="content-body" class="content-body"></div>
     </div>
 
-    <!-- 슬림형 아일랜드 바 -->
-    <div id="floating-menu" class="floating-menu">
-      <button class="icon-btn" onclick="switchScreen('library')"><svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg></button>
-      <button class="icon-btn" onclick="openModal('modal-toc')"><svg viewBox="0 0 24 24"><path d="M3 9h14V7H3v2zm0 4h14v-2H3v2zm0 4h14v-2H3v2zm16 0h2v-2h-2v2zm0-10v2h2V7h-2zm0 6h2v-2h-2v2z"/></svg></button>
-      <button class="icon-btn" onclick="toggleTTS()"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></button>
-      <button class="icon-btn" onclick="closeModal('modal-settings')"><svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg></button>
+    <!-- 하단 메뉴 및 독서 진행률 바 -->
+    <div id="floating-menu-wrapper" class="floating-menu-wrapper">
+      <div id="progress-indicator" class="progress-pill">0%</div>
+      <div class="floating-menu">
+        <button class="icon-btn" onclick="switchScreen('library')"><svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg></button>
+        <button class="icon-btn" onclick="openModal('modal-toc')"><svg viewBox="0 0 24 24"><path d="M3 9h14V7H3v2zm0 4h14v-2H3v2zm0 4h14v-2H3v2zm16 0h2v-2h-2v2zm0-10v2h2V7h-2zm0 6h2v-2h-2v2z"/></svg></button>
+        <button class="icon-btn" onclick="toggleTTS()"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></button>
+        <button class="icon-btn" onclick="openModal('modal-settings')"><svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 붙여넣기 모달 -->
+  <div id="modal-paste" class="modal-overlay">
+    <div class="modal-card">
+      <h3 style="margin-bottom:12px; color:var(--accent);">텍스트 붙여넣기</h3>
+      <input type="text" id="paste-title" placeholder="제목을 입력하세요" style="width:100%; padding:10px; background:rgba(0,0,0,0.3); border:1px solid #444; border-radius:8px; color:#fff; margin-bottom:8px;">
+      <textarea id="paste-content" class="paste-textarea" placeholder="여기에 소설이나 문서 내용을 붙여넣으세요..."></textarea>
+      <div style="display:flex; gap:10px; justify-content:flex-end;">
+        <button class="opt-btn" onclick="closeModal('modal-paste')">취소</button>
+        <button class="opt-btn active" onclick="savePastedText()">등록 및 읽기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 독서 설정 모달 -->
+  <div id="modal-settings" class="modal-overlay">
+    <div class="modal-card">
+      <h3 style="margin-bottom:16px; color:var(--accent);">독서 환경 설정</h3>
+      <div class="setting-row">
+        <span class="setting-label">글꼴</span>
+        <div class="btn-group">
+          <button id="btn-font-sans" class="opt-btn active" onclick="setFont('sans')">고딕</button>
+          <button id="btn-font-serif" class="opt-btn" onclick="setFont('serif')">명조</button>
+        </div>
+      </div>
+      <div class="setting-row">
+        <span class="setting-label">굵은 글씨 (볼드)</span>
+        <div class="btn-group">
+          <button id="btn-bold" class="opt-btn" onclick="toggleBold()">OFF</button>
+        </div>
+      </div>
+      <div class="setting-row">
+        <span class="setting-label">글자 크기</span>
+        <div class="btn-group">
+          <button class="opt-btn" onclick="changeFontSize(-1)">A-</button>
+          <button class="opt-btn" onclick="changeFontSize(1)">A+</button>
+        </div>
+      </div>
+      <div class="setting-row">
+        <span class="setting-label">테마 모드</span>
+        <div class="btn-group">
+          <button id="btn-theme-light" class="opt-btn active" onclick="setTheme('light')">밝음</button>
+          <button id="btn-theme-dark" class="opt-btn" onclick="setTheme('dark')">나이트</button>
+        </div>
+      </div>
+      <div style="text-align:right; margin-top:20px;">
+        <button class="opt-btn active" onclick="closeModal('modal-settings')">닫기</button>
+      </div>
     </div>
   </div>
 
@@ -360,31 +467,33 @@
       <h3 style="margin-bottom:16px; color:var(--accent);">목차</h3>
       <div id="toc-list" style="max-height:50vh; overflow-y:auto;"></div>
       <div style="text-align:right; margin-top:16px;">
-        <button onclick="closeModal('modal-toc')" style="padding:6px 16px; background:var(--accent); border:none; border-radius:8px;">닫기</button>
+        <button class="opt-btn" onclick="closeModal('modal-toc')">닫기</button>
       </div>
     </div>
   </div>
 
   <script>
-    // PDF.js 워커 예외 처리 적용
     if (window.pdfjsLib) {
       pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
     }
 
     let books = JSON.parse(localStorage.getItem('yeobaek_books') || '[]');
     let currentBookId = null;
+    let activeTab = 'reading';
     let lastScrollTop = 0;
+    let isBold = false;
+    let fontSize = 1.1;
 
     function switchScreen(id) {
       document.querySelectorAll('.app-screen').forEach(s => s.classList.remove('active'));
       document.getElementById(`screen-${id}`).classList.add('active');
       if (id === 'library') renderLibrary();
+      if (id !== 'reader' && window.speechSynthesis) window.speechSynthesis.cancel();
     }
 
     function openModal(id) { document.getElementById(id).classList.add('active'); }
     function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
-    // 파일 로딩 핵심 로직 (폴백 파서 완비)
     async function handleFileUpload(event) {
       const file = event.target.files[0];
       if (!file) return;
@@ -417,7 +526,7 @@
               rawText += "\n\n";
             }
           } else {
-            rawText = new TextDecoder('utf-8').decode(buffer).replace(/[^\uAC00-\uD7A3\u1100-\u11FF\u3130-\u318F\s0-9a-zA-Z.,!?]/g, ' ');
+            rawText = new TextDecoder('utf-8').decode(buffer).replace(/[^\uAC00-\uD7A3\s0-9a-zA-Z.,!?]/g, ' ');
           }
         } else if (ext === 'docx') {
           const buffer = await file.arrayBuffer();
@@ -440,7 +549,7 @@
         }
 
         if (!rawText || !rawText.trim()) {
-          alert('파일 본문을 읽어오지 못했습니다. TXT 파일 형식으로 전환해 시도해 주세요.');
+          alert('본문 내용을 로드하지 못했습니다.');
           return;
         }
 
@@ -450,6 +559,16 @@
       } finally {
         event.target.value = '';
       }
+    }
+
+    function savePastedText() {
+      const title = document.getElementById('paste-title').value.trim() || '무제 문서';
+      const content = document.getElementById('paste-content').value.trim();
+      if (!content) { alert('내용을 입력해 주세요.'); return; }
+      saveBookToLibrary(title, content);
+      closeModal('modal-paste');
+      document.getElementById('paste-title').value = '';
+      document.getElementById('paste-content').value = '';
     }
 
     function saveBookToLibrary(title, rawText) {
@@ -476,12 +595,13 @@
 
     function renderParsedBookContent(book) {
       const container = document.getElementById('content-body');
-      container.innerHTML = `<h1 style="text-align:center; margin-bottom:1.5em; font-size:1.6rem; border-bottom:1px solid var(--accent); padding-bottom:0.5em;">${book.title}</h1>`;
+      container.innerHTML = `<h1 style="text-align:center; margin-bottom:1.5em; font-size:1.6rem; border-bottom:2px solid var(--accent); padding-bottom:0.5em;">${book.title}</h1>`;
 
       const lines = book.content.split(/\r?\n/);
       let tocList = [];
 
-      const chapterRegex = /^\s*(제\s*[\d０-９一二三四五六七八九十백천]+\s*[장화회편권부절기억토막]|CHAPTER\s*\d+|CHAP\.?\s*\d+|\d+\s*화|\d+\s*회|[\d０-９]+\s*\.\s+\S+|^\d+$|\b(프롤로그|에필로그|서문|머리말|맺음말|후기|prologue|epilogue)\b)/i;
+      // 고도화된 목차 인식 정규식 Engine
+      const chapterRegex = /^\s*(제\s*[\d０-９一二三四五六七八九十백천]+\s*[장화회편권부절기억토막]|CHAPTER\s*\d+|CHAP\.?\s*\d+|\d+\s*화|\d+\s*회|[\d０-９]+\s*\.\s+\S+|^\d+$|\[\d+\]|\(\d+\)|\b(프롤로그|에필로그|서문|머리말|맺음말|후기|prologue|epilogue)\b)/i;
 
       lines.forEach((line, index) => {
         const trimmed = line.trim();
@@ -507,6 +627,11 @@
       });
 
       renderTOC(tocList);
+
+      setTimeout(() => {
+        const scrollArea = document.getElementById('reader-scroll-area');
+        scrollArea.scrollTop = book.scrollPos || 0;
+      }, 100);
     }
 
     function renderTOC(tocList) {
@@ -524,11 +649,24 @@
       });
     }
 
+    function switchTab(tab) {
+      activeTab = tab;
+      document.getElementById('tab-reading').classList.toggle('active', tab === 'reading');
+      document.getElementById('tab-finished').classList.toggle('active', tab === 'finished');
+      renderLibrary();
+    }
+
     function renderLibrary() {
       const container = document.getElementById('book-list-container');
-      container.innerHTML = books.length === 0 ? '<div style="text-align:center; color:#777; margin-top:50px;">등록된 책이 없습니다.</div>' : '';
+      container.innerHTML = '';
+      const filtered = books.filter(b => activeTab === 'finished' ? b.isFinished : !b.isFinished);
 
-      books.forEach(book => {
+      if (filtered.length === 0) {
+        container.innerHTML = '<div style="text-align:center; color:#777; margin-top:50px;">등록된 책이 없습니다.</div>';
+        return;
+      }
+
+      filtered.forEach(book => {
         const card = document.createElement('div');
         card.className = 'book-card';
         card.innerHTML = `
@@ -543,18 +681,80 @@
     }
 
     function deleteBook(id) {
-      if (!confirm('삭제하시겠습니까?')) return;
+      if (!confirm('정말 삭제하시겠습니까?')) return;
       books = books.filter(b => b.id !== id);
       localStorage.setItem('yeobaek_books', JSON.stringify(books));
       renderLibrary();
     }
 
+    // 스크롤 및 독서 진행률 업데이트
     function handleScroll() {
-      const st = document.getElementById('reader-scroll-area').scrollTop;
-      const menu = document.getElementById('floating-menu');
-      if (st > lastScrollTop && st > 50) menu.classList.add('hidden');
-      else menu.classList.remove('hidden');
+      const area = document.getElementById('reader-scroll-area');
+      const st = area.scrollTop;
+      const maxScroll = area.scrollHeight - area.clientHeight;
+      const wrapper = document.getElementById('floating-menu-wrapper');
+
+      if (st > lastScrollTop && st > 50) wrapper.classList.add('hidden');
+      else wrapper.classList.remove('hidden');
       lastScrollTop = st;
+
+      const progress = maxScroll > 0 ? Math.min(100, Math.round((st / maxScroll) * 100)) : 0;
+      document.getElementById('progress-indicator').innerText = `${progress}%`;
+
+      if (currentBookId) {
+        const book = books.find(b => b.id === currentBookId);
+        if (book) {
+          book.scrollPos = st;
+          if (progress >= 98) book.isFinished = true;
+          localStorage.setItem('yeobaek_books', JSON.stringify(books));
+        }
+      }
+    }
+
+    function toggleTTS() {
+      if (!('speechSynthesis' in window)) {
+        alert('음성 읽기를 지원하지 않는 브라우저입니다.');
+        return;
+      }
+      if (window.speechSynthesis.speaking) {
+        window.speechSynthesis.cancel();
+        return;
+      }
+      const text = document.getElementById('content-body').innerText;
+      if (!text) return;
+      const utt = new SpeechSynthesisUtterance(text);
+      utt.lang = 'ko-KR';
+      window.speechSynthesis.speak(utt);
+    }
+
+    /* 설정 기능 로직 */
+    function setFont(type) {
+      const body = document.getElementById('content-body');
+      body.style.fontFamily = type === 'serif' ? '"Nanum Myeongjo", "Batang", serif' : '-apple-system, sans-serif';
+      document.getElementById('btn-font-sans').classList.toggle('active', type === 'sans');
+      document.getElementById('btn-font-serif').classList.toggle('active', type === 'serif');
+    }
+
+    function toggleBold() {
+      isBold = !isBold;
+      document.getElementById('content-body').style.fontWeight = isBold ? '700' : '400';
+      const btn = document.getElementById('btn-bold');
+      btn.classList.toggle('active', isBold);
+      btn.innerText = isBold ? 'ON' : 'OFF';
+    }
+
+    function changeFontSize(delta) {
+      fontSize = Math.max(0.8, Math.min(2.0, fontSize + delta * 0.1));
+      document.getElementById('content-body').style.fontSize = `${fontSize}rem`;
+    }
+
+    function setTheme(mode) {
+      const reader = document.getElementById('screen-reader');
+      const isDark = mode === 'dark';
+      reader.style.background = isDark ? '#121318' : '#f7f4ed';
+      reader.style.color = isDark ? '#c5c5c5' : '#2c221e';
+      document.getElementById('btn-theme-light').classList.toggle('active', !isDark);
+      document.getElementById('btn-theme-dark').classList.toggle('active', isDark);
     }
   </script>
 </body>
